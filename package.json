@@ -7,7 +7,10 @@
   "scripts": {
     "lint": "xo"
   },
-  "dependencies": {},
+  "dependencies": {
+    "basic-ftp": "^5.0.3",
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {
     "xo": "^0.56.0"
   },
