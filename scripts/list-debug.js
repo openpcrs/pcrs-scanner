@@ -6,12 +6,13 @@ import process from 'node:process'
 
 import {getFTPTree} from '../lib/storage/ftp.js'
 
-const {FTP_HOST, FTP_USER, FTP_PASSWORD} = process.env
+const {FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_START_PATH} = process.env
 
 const ftpConfig = {
   host: FTP_HOST,
   user: FTP_USER,
   password: FTP_PASSWORD,
+  startPath: FTP_START_PATH,
   verbose: false
 }
 
