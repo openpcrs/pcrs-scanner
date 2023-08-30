@@ -1,0 +1,6 @@
+{
+  "name": "pcrs-scanner",
+  "version": "0.0.0",
+  "repository": "https://github.com/openpcrs/pcrs-scanner.git",
+  "private": true
+}
