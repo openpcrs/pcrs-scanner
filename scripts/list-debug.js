@@ -6,23 +6,16 @@ import process from 'node:process'
 
 import {listFiles} from '../lib/storage/ftp.js'
 
-const {FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_START_PATH} = process.env
+const {FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD, FTP_START_PATH} = process.env
 
-const ftpConfig = {
+const ftpOptions = {
   host: FTP_HOST,
+  port: FTP_PORT,
   user: FTP_USER,
   password: FTP_PASSWORD,
   startPath: FTP_START_PATH,
   verbose: false
 }
 
-async function main() {
-  try {
-    const ftpTree = await listFiles(ftpConfig)
-    console.log(ftpTree)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-await main()
+const tree = await listFiles(ftpOptions)
+console.log(tree)
