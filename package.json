@@ -4,7 +4,9 @@
   "repository": "https://github.com/openpcrs/pcrs-scanner.git",
   "private": true,
   "type": "module",
-  "dependencies": {},
+  "dependencies": {
+    "basic-ftp": "^5.0.3"
+  },
   "devDependencies": {
     "xo": "^0.56.0"
   },
