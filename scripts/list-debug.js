@@ -19,11 +19,7 @@ const ftpOptions = {
 }
 
 const htmlOptions = {
-  url: HTTP_URL,
-  timeout: {
-    connection: 2000,
-    activity: 4000
-  }
+  url: HTTP_URL
 }
 
 const ftpTree = await ftpListFiles(ftpOptions)
