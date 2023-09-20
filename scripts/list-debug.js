@@ -15,7 +15,7 @@ const ftpOptions = {
   user: FTP_USER,
   password: FTP_PASSWORD,
   startPath: FTP_START_PATH,
-  verbose: true,
+  verbose: false,
   secure: FTP_SECURE
 }
 
