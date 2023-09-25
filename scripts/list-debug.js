@@ -4,9 +4,10 @@
 import 'dotenv/config.js'
 import process from 'node:process'
 
-import {listFiles} from '../lib/storage/ftp.js'
+import {listFiles as ftpListFiles} from '../lib/storage/ftp.js'
+import {listFiles as httpListFiles} from '../lib/storage/http.js'
 
-const {FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD, FTP_START_PATH, FTP_SECURE} = process.env
+const {FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD, FTP_START_PATH, FTP_SECURE, HTTP_URL} = process.env
 
 const ftpOptions = {
   host: FTP_HOST,
@@ -18,5 +19,12 @@ const ftpOptions = {
   secure: FTP_SECURE
 }
 
-const tree = await listFiles(ftpOptions)
-console.log(tree)
+const htmlOptions = {
+  url: HTTP_URL
+}
+
+const ftpTree = await ftpListFiles(ftpOptions)
+const htmlTree = await httpListFiles(htmlOptions)
+
+console.log('ftpTree', ftpTree)
+console.log('htmlTree', htmlTree)
