@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "xo",
     "test": "ava",
-    "start": "node index"
+    "start": "node server.js"
   },
   "dependencies": {
     "basic-ftp": "^5.0.3",

@@ -7,7 +7,9 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 
-import createRouter from './router.js'
+import w from './lib/util/w.js'
+import errorHandler from './lib/util/error-handler.js'
+import {analyzeRaster, gdalAnalyze} from './lib/gdal-analyze.js'
 
 const PORT = process.env.PORT || 5000
 
@@ -19,7 +21,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
-app.use('/', createRouter())
+app.post('/analyze', w(async (req, res) => {
+  const {url} = req.query
+  const ds = await gdalAnalyze(url)
+  const analyze = await analyzeRaster(ds)
+
+  res.send(analyze)
+}))
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(`Start listening on port ${PORT}`)
