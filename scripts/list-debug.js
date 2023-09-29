@@ -6,6 +6,10 @@ import process from 'node:process'
 
 import {listFiles as ftpListFiles} from '../lib/storage/ftp.js'
 import {listFiles as httpListFiles} from '../lib/storage/http.js'
+import mongo from '../lib/util/mongo.js'
+import {create} from '../lib/models/file.js'
+
+await mongo.connect()
 
 const {FTP_HOST, FTP_PORT, FTP_USER, FTP_PASSWORD, FTP_START_PATH, FTP_SECURE, HTTP_URL} = process.env
 
@@ -28,3 +32,9 @@ const htmlTree = await httpListFiles(htmlOptions)
 
 console.log('ftpTree', ftpTree)
 console.log('htmlTree', htmlTree)
+
+const ftpFiles = await create(ftpTree)
+const httpFiles = await create(htmlTree)
+
+console.log('ftpFiles', ftpFiles)
+console.log('httpFiles', httpFiles)
