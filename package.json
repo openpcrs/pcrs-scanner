@@ -21,7 +21,8 @@
     "lodash-es": "^4.17.21",
     "minimist": "^1.2.8",
     "mongodb": "^6.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "p-limit": "^4.0.0"
   },
   "devDependencies": {
     "ava": "^5.3.1",
