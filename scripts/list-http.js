@@ -3,7 +3,7 @@ import process from 'node:process'
 import minimist from 'minimist'
 
 import {computeTree} from '../lib/storage/http.js'
-import {flattenTree} from '../lib/tree.js'
+import {flattenTree, signItems} from '../lib/tree.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -13,4 +13,4 @@ if (!argv.url) {
 }
 
 const tree = await computeTree({url: argv.url})
-console.log(flattenTree(tree))
+console.log(signItems(flattenTree(tree)))
