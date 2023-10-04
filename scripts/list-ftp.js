@@ -3,7 +3,7 @@
 import process from 'node:process'
 import minimist from 'minimist'
 
-import {listFiles} from '../lib/storage/ftp.js'
+import {computeTree} from '../lib/storage/ftp.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -22,5 +22,5 @@ const ftpOptions = {
   secure: argv.secure
 }
 
-const tree = await listFiles(ftpOptions)
+const tree = await computeTree(ftpOptions)
 console.log(tree)

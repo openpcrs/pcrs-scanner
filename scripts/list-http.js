@@ -2,7 +2,7 @@
 import process from 'node:process'
 import minimist from 'minimist'
 
-import {listFiles} from '../lib/storage/http.js'
+import {computeTree} from '../lib/storage/http.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -11,5 +11,5 @@ if (!argv.url) {
   process.exit(1)
 }
 
-const tree = await listFiles({url: argv.url})
+const tree = await computeTree({url: argv.url})
 console.log(tree)
