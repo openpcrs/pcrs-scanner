@@ -4,7 +4,7 @@ import process from 'node:process'
 import minimist from 'minimist'
 
 import {computeTree} from '../lib/storage/ftp.js'
-import {flattenTree, signItems} from '../lib/tree.js'
+import {flattenTree, signItems, addDataFormat} from '../lib/tree.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -24,4 +24,4 @@ const ftpOptions = {
 }
 
 const tree = await computeTree(ftpOptions)
-console.log(signItems(flattenTree(tree)))
+console.log(addDataFormat(signItems(flattenTree(tree))))
