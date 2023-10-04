@@ -7,13 +7,18 @@ import {listFiles} from '../lib/storage/ftp.js'
 
 const argv = minimist(process.argv.slice(2))
 
+if (!argv.host) {
+  console.log('--host is required')
+  process.exit(1)
+}
+
 const ftpOptions = {
   host: argv.host,
   port: argv.port,
   user: argv.user,
   password: argv.password,
   startPath: argv.startPath || '/',
-  verbose: false,
+  verbose: argv.verbose,
   secure: argv.secure
 }
 
