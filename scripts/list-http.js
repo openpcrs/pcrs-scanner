@@ -2,8 +2,7 @@
 import process from 'node:process'
 import minimist from 'minimist'
 
-import {computeTree} from '../lib/storage/http.js'
-import {flattenTree, signItems, addDataFormat} from '../lib/tree.js'
+import {computeTree} from '../lib/tree.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -12,5 +11,9 @@ if (!argv.url) {
   process.exit(1)
 }
 
-const tree = await computeTree({url: argv.url})
-console.log(addDataFormat(signItems(flattenTree(tree))))
+const httpParams = {
+  url: argv.url
+}
+
+const tree = await computeTree('http', httpParams)
+console.log(tree)

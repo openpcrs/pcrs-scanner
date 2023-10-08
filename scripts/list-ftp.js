@@ -3,8 +3,7 @@
 import process from 'node:process'
 import minimist from 'minimist'
 
-import {computeTree} from '../lib/storage/ftp.js'
-import {flattenTree, signItems, addDataFormat} from '../lib/tree.js'
+import {computeTree} from '../lib/tree.js'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -13,7 +12,7 @@ if (!argv.host) {
   process.exit(1)
 }
 
-const ftpOptions = {
+const ftpParams = {
   host: argv.host,
   port: argv.port,
   user: argv.user,
@@ -23,5 +22,5 @@ const ftpOptions = {
   secure: argv.secure
 }
 
-const tree = await computeTree(ftpOptions)
-console.log(addDataFormat(signItems(flattenTree(tree))))
+const tree = await computeTree('ftp', ftpParams)
+console.log(tree)
