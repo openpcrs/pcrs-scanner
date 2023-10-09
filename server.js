@@ -9,7 +9,7 @@ import morgan from 'morgan'
 
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
-import {analyzeRaster, gdalAnalyze} from './lib/gdal-analyze.js'
+import {createStorage} from './lib/models/storage.js'
 
 const PORT = process.env.PORT || 5000
 
@@ -21,12 +21,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
-app.post('/analyze', w(async (req, res) => {
-  const {url} = req.query
-  const ds = await gdalAnalyze(url)
-  const analyze = await analyzeRaster(ds)
-
-  res.send(analyze)
+app.post('/storages', w(async (req, res) => {
+  const storage = await createStorage(req.body)
+  res.send(storage)
 }))
 
 app.use(errorHandler)
