@@ -25,6 +25,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(cors({origin: true}))
 
+app.use(express.json())
+
 app.post('/storages', w(async (req, res) => {
   const storage = await createStorage(req.body)
   res.send(storage)
