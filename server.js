@@ -18,6 +18,7 @@ import {generateGeoJson} from './lib/geojson.js'
 await mongo.connect()
 
 const PORT = process.env.PORT || 5000
+const {ROOT_URL} = process.env
 
 const app = express()
 
@@ -81,6 +82,19 @@ app.get('/storages/:storageId/geojson', w(async (req, res) => {
   const dataItems = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
   const fc = generateGeoJson(dataItems)
   res.send(fc)
+}))
+
+app.get('/storages/:storageId/preview-map', w(async (req, res) => {
+  if (!ROOT_URL) {
+    throw createError(500, 'Not configured')
+  }
+
+  if (!req.storage.result?.lastSuccessfulScan) {
+    throw createError(404, 'No successful scan found')
+  }
+
+  const geojsonUrl = `${ROOT_URL}/storages/${req.storage._id}/geojson`
+  res.redirect(`http://geojson.io/#data=data:text/x-url,${encodeURIComponent(geojsonUrl)}`)
 }))
 
 app.use(errorHandler)
