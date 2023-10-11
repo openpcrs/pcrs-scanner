@@ -87,13 +87,21 @@ app.get('/storages/:storageId/geojson', w(async (req, res) => {
 }))
 
 app.get('/storages/:storageId/preview', w(async (req, res) => {
+  if (!ROOT_URL) {
+    throw createError(500, 'Not configured')
+  }
+
   if (!req.storage.result?.lastSuccessfulScan) {
     throw createError(404, 'No successful scan found')
   }
 
   const {lastSuccessfulScan} = req.storage.result
   const data = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
-  res.render('preview', {data, storageId: req.storage._id})
+  res.render('preview', {
+    data: data.filter(i => i.computedMetadata),
+    storageId: req.storage._id,
+    rootUrl: ROOT_URL
+  })
 }))
 
 app.get('/storages/:storageId/preview-map', w(async (req, res) => {
