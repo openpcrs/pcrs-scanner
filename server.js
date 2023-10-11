@@ -30,8 +30,8 @@ app.use(cors({origin: true}))
 app.use(express.json())
 
 app.post('/storages', w(async (req, res) => {
-  const storage = await createStorage(req.body)
-  await askForScan(storage._id)
+  let storage = await createStorage(req.body)
+  storage = await askForScan(storage._id)
   res.send(storage)
 }))
 
@@ -55,6 +55,11 @@ app.param('storageId', w(async (req, res, next) => {
 
 app.get('/storages/:storageId', w(async (req, res) => {
   res.send(req.storage)
+}))
+
+app.post('/storages/:storageId/scan', w(async (req, res) => {
+  const storage = await askForScan(req.storage._id)
+  res.send(storage)
 }))
 
 app.get('/storages/:storageId/data', w(async (req, res) => {
