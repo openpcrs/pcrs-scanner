@@ -94,7 +94,7 @@ app.get('/storages/:storageId/preview-map', w(async (req, res) => {
   }
 
   const geojsonUrl = `${ROOT_URL}/storages/${req.storage._id}/geojson`
-  res.redirect(`http://geojson.io/#data=data:text/x-url,${encodeURIComponent(geojsonUrl)}`)
+  res.redirect(`https://geojson.io/#data=data:text/x-url,${encodeURIComponent(geojsonUrl)}`)
 }))
 
 app.use(errorHandler)
