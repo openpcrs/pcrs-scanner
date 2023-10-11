@@ -22,6 +22,8 @@ const {ROOT_URL} = process.env
 
 const app = express()
 
+app.set('view engine', 'ejs')
+
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
@@ -82,6 +84,16 @@ app.get('/storages/:storageId/geojson', w(async (req, res) => {
   const dataItems = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
   const fc = generateGeoJson(dataItems)
   res.send(fc)
+}))
+
+app.get('/storages/:storageId/preview', w(async (req, res) => {
+  if (!req.storage.result?.lastSuccessfulScan) {
+    throw createError(404, 'No successful scan found')
+  }
+
+  const {lastSuccessfulScan} = req.storage.result
+  const data = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
+  res.render('preview', {data, storageId: req.storage._id})
 }))
 
 app.get('/storages/:storageId/preview-map', w(async (req, res) => {
