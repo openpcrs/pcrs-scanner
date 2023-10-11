@@ -8,7 +8,8 @@
     "test": "ava",
     "start": "node server.js",
     "debug:list-http": "node scripts/list-http.js",
-    "debug:list-ftp": "node scripts/list-ftp.js"
+    "debug:list-ftp": "node scripts/list-ftp.js",
+    "debug:list-sftp": "node scripts/list-sftp.js"
   },
   "dependencies": {
     "basic-ftp": "^5.0.3",
