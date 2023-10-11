@@ -11,7 +11,7 @@ import createError from 'http-errors'
 import mongo from './lib/util/mongo.js'
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
-import {createStorage, getStorage} from './lib/models/storage.js'
+import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
 
 await mongo.connect()
 
@@ -29,6 +29,7 @@ app.use(express.json())
 
 app.post('/storages', w(async (req, res) => {
   const storage = await createStorage(req.body)
+  await askForScan(storage._id)
   res.send(storage)
 }))
 
