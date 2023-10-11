@@ -12,6 +12,8 @@ import mongo from './lib/util/mongo.js'
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
 import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
+import {findDataItemsByScan} from './lib/models/tree-item.js'
+import {generateGeoJson} from './lib/geojson.js'
 
 await mongo.connect()
 
@@ -53,6 +55,17 @@ app.param('storageId', w(async (req, res, next) => {
 
 app.get('/storages/:storageId', w(async (req, res) => {
   res.send(req.storage)
+}))
+
+app.get('/storages/:storageId/geojson', w(async (req, res) => {
+  if (!req.storage.result?.lastSuccessfulScan) {
+    throw createError(404, 'No successful scan found')
+  }
+
+  const {lastSuccessfulScan} = req.storage.result
+  const dataItems = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
+  const fc = generateGeoJson(dataItems)
+  res.send(fc)
 }))
 
 app.use(errorHandler)
