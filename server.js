@@ -57,6 +57,16 @@ app.get('/storages/:storageId', w(async (req, res) => {
   res.send(req.storage)
 }))
 
+app.get('/storages/:storageId/data', w(async (req, res) => {
+  if (!req.storage.result?.lastSuccessfulScan) {
+    throw createError(404, 'No successful scan found')
+  }
+
+  const {lastSuccessfulScan} = req.storage.result
+  const dataItems = await findDataItemsByScan({_scan: lastSuccessfulScan, _storage: req.storage._id})
+  res.send(dataItems)
+}))
+
 app.get('/storages/:storageId/geojson', w(async (req, res) => {
   if (!req.storage.result?.lastSuccessfulScan) {
     throw createError(404, 'No successful scan found')
