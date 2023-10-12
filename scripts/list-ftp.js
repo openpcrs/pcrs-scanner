@@ -15,7 +15,7 @@ if (!argv.host) {
 const ftpParams = {
   host: argv.host,
   port: argv.port,
-  user: argv.user,
+  username: argv.username,
   password: argv.password,
   startPath: argv.startPath || '/',
   verbose: argv.verbose,

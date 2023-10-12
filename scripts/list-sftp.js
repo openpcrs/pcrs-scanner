@@ -12,8 +12,8 @@ if (!argv.host) {
   process.exit(1)
 }
 
-if (!argv.user) {
-  console.log('--user is required')
+if (!argv.username) {
+  console.log('--username is required')
   process.exit(1)
 }
 
@@ -25,7 +25,7 @@ if (!argv.password) {
 const sftpParams = {
   host: argv.host,
   port: argv.port,
-  user: argv.user,
+  username: argv.username,
   password: argv.password,
   startPath: argv.startPath || '/'
 }
