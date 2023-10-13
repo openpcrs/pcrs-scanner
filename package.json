@@ -1,7 +1,8 @@
 {
   "name": "pcrs-scanner",
   "version": "0.0.0",
-  "repository": "https://github.com/openpcrs/pcrs-scanner.git",
+  "repository": "https://github.com/openpcrs/pcrs-scanner",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "lint": "xo",
