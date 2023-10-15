@@ -14,6 +14,7 @@ import errorHandler from './lib/util/error-handler.js'
 import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
 import {findDataItemsByScan} from './lib/models/tree-item.js'
 import {generateGeoJson} from './lib/geojson.js'
+import {downloadFile} from './lib/file.js'
 
 await mongo.connect()
 
@@ -115,6 +116,13 @@ app.get('/storages/:storageId/preview-map', w(async (req, res) => {
 
   const geojsonUrl = `${ROOT_URL}/storages/${req.storage._id}/geojson`
   res.redirect(`https://geojson.io/#data=data:text/x-url,${encodeURIComponent(geojsonUrl)}`)
+}))
+
+app.get('/storages/:storageId/files/*', w(async (req, res) => {
+  const parts = req.path.split('/').slice(4)
+  const fullPath = '/' + parts.join('/')
+
+  await downloadFile(req.storage, fullPath, req, res)
 }))
 
 app.use(errorHandler)
