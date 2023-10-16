@@ -11,6 +11,7 @@ import createError from 'http-errors'
 import mongo from './lib/util/mongo.js'
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
+import {sanitizePath} from './lib/util/path.js'
 import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
 import {findDataItemsByScan, itemExists} from './lib/models/tree-item.js'
 import {generateGeoJson} from './lib/geojson.js'
@@ -120,7 +121,7 @@ app.get('/storages/:storageId/preview-map', w(async (req, res) => {
 
 app.get('/storages/:storageId/files/*', w(async (req, res) => {
   const parts = req.path.split('/').slice(4)
-  const fullPath = '/' + parts.join('/')
+  const fullPath = sanitizePath('/' + parts.join('/'))
 
   const _storage = req.storage._id
 
