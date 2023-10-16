@@ -8,7 +8,7 @@
     "lint": "xo",
     "test": "ava",
     "start": "node server.js",
-    "worker": "node worjer.js",
+    "worker": "node worker.js",
     "debug:list-http": "node scripts/list-http.js",
     "debug:list-ftp": "node scripts/list-ftp.js",
     "debug:list-sftp": "node scripts/list-sftp.js"
