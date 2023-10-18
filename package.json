@@ -14,7 +14,6 @@
     "debug:list-sftp": "node scripts/list-sftp.js"
   },
   "dependencies": {
-    "@turf/union": "^6.5.0",
     "basic-ftp": "^5.0.3",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
