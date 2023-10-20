@@ -7,11 +7,13 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import createError from 'http-errors'
+import {omit} from 'lodash-es'
 
 import mongo from './lib/util/mongo.js'
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
 import {sanitizePath} from './lib/util/path.js'
+import {readToken, ensureAdmin} from './lib/util/security.js'
 import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
 import {findDataItemsByScan, itemExists} from './lib/models/tree-item.js'
 import {generateGeoJson} from './lib/geojson.js'
@@ -20,21 +22,22 @@ import {downloadFile} from './lib/file.js'
 await mongo.connect()
 
 const PORT = process.env.PORT || 5000
-const {ROOT_URL} = process.env
+const {ROOT_URL, NODE_ENV} = process.env
 
 const app = express()
 
 app.set('view engine', 'ejs')
 
-if (process.env.NODE_ENV !== 'production') {
+if (NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
 
 app.use(cors({origin: true}))
 
 app.use(express.json())
+app.use(readToken)
 
-app.post('/storages', w(async (req, res) => {
+app.post('/storages', ensureAdmin, w(async (req, res) => {
   let storage = await createStorage(req.body)
   storage = await askForScan(storage._id)
   res.send(storage)
@@ -59,10 +62,14 @@ app.param('storageId', w(async (req, res, next) => {
 }))
 
 app.get('/storages/:storageId', w(async (req, res) => {
-  res.send(req.storage)
+  const storage = req.isAdmin
+    ? storage
+    : omit(req.storage, ['params'])
+
+  res.send(storage)
 }))
 
-app.post('/storages/:storageId/scan', w(async (req, res) => {
+app.post('/storages/:storageId/scan', ensureAdmin, w(async (req, res) => {
   const storage = await askForScan(req.storage._id)
   res.send(storage)
 }))
