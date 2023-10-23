@@ -13,7 +13,7 @@ import mongo from './lib/util/mongo.js'
 import w from './lib/util/w.js'
 import errorHandler from './lib/util/error-handler.js'
 import {sanitizePath} from './lib/util/path.js'
-import {readToken, ensureAdmin} from './lib/util/security.js'
+import {readToken, ensureAdmin, computeDownloadToken, checkDownloadToken} from './lib/util/security.js'
 import {createStorage, getStorage, askForScan} from './lib/models/storage.js'
 import {findDataItemsByScan, itemExists} from './lib/models/tree-item.js'
 import {generateGeoJson} from './lib/geojson.js'
@@ -74,6 +74,11 @@ app.post('/storages/:storageId/scan', ensureAdmin, w(async (req, res) => {
   res.send(storage)
 }))
 
+app.post('/storages/:storageId/generate-download-token', ensureAdmin, w(async (req, res) => {
+  const token = computeDownloadToken({storage: req.storage._id})
+  res.send({token})
+}))
+
 app.get('/storages/:storageId/data', w(async (req, res) => {
   if (!req.storage.result?.lastSuccessfulScan) {
     throw createError(404, 'No successful scan found')
@@ -127,6 +132,15 @@ app.get('/storages/:storageId/preview-map', w(async (req, res) => {
 }))
 
 app.get('/storages/:storageId/files/*', w(async (req, res) => {
+  const canDownload = checkDownloadToken(
+    req.query.token,
+    {storage: req.storage._id}
+  )
+
+  if (!canDownload) {
+    throw createError(403, 'Token not valid')
+  }
+
   const parts = req.path.split('/').slice(4)
   const fullPath = sanitizePath('/' + parts.join('/'))
 
