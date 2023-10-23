@@ -63,7 +63,7 @@ app.param('storageId', w(async (req, res, next) => {
 
 app.get('/storages/:storageId', w(async (req, res) => {
   const storage = req.isAdmin
-    ? storage
+    ? req.storage
     : omit(req.storage, ['params'])
 
   res.send(storage)
