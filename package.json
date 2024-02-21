@@ -14,7 +14,7 @@
     "debug:list-sftp": "node scripts/list-sftp.js"
   },
   "dependencies": {
-    "basic-ftp": "^5.0.3",
+    "basic-ftp": "^5.0.4",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
