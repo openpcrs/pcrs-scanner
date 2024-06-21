@@ -38,8 +38,7 @@ app.use(express.json())
 app.use(readToken)
 
 app.post('/storages', ensureAdmin, w(async (req, res) => {
-  let storage = await createStorage(req.body)
-  storage = await askForScan(storage._id)
+  const storage = await createStorage(req.body)
   res.send(storage)
 }))
 
