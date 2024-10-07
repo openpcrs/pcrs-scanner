@@ -11,7 +11,8 @@
     "worker": "node worker.js",
     "debug:list-http": "node scripts/list-http.js",
     "debug:list-ftp": "node scripts/list-ftp.js",
-    "debug:list-sftp": "node scripts/list-sftp.js"
+    "debug:list-sftp": "node scripts/list-sftp.js",
+    "scalingo-postbuild": "yarn add gdal-async --build-from-source --shared_gdal"
   },
   "dependencies": {
     "basic-ftp": "^5.0.4",
