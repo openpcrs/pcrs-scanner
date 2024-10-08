@@ -1,2 +1,3 @@
+:repo:deb [trusted=yes] https://ppa.launchpadcontent.net/ubuntugis/ppa/ubuntu jammy main
 gdal-bin
 libgdal-dev
