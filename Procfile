@@ -1,2 +1,2 @@
-web: node helloworld.js
+web: node helloworld.cjs
 worker: node worker.js
