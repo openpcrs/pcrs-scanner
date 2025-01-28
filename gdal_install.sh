@@ -6,6 +6,6 @@ INSTALL_LOCKFILE="gdal_install.lock"
 if [[ ! -e "$INSTALL_LOCKFILE" ]]; then
   touch "$INSTALL_LOCKFILE"
   # install gdal with specific options to use the host gdal library
-  yarn add --pure-lockfile gdal-async --build-from-source --shared_gdal
+  npm_config_build_from_source=true yarn add gdal-async --shared_gdal
   rm "$INSTALL_LOCKFILE"
 fi
