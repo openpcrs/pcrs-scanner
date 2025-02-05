@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Eeuox pipefail
+
 INSTALL_LOCKFILE="gdal_install.lock"
 
 gdal-config --version
