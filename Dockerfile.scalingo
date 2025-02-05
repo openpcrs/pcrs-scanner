@@ -1,0 +1,16 @@
+FROM scalingo/scalingo-22:v11
+RUN apt-get update
+RUN apt-get install libgdal-dev libzstd-dev -y
+RUN apt-get install curl gpg make g++ -y
+RUN curl https://mise.run | MISE_INSTALL_PATH=/usr/bin/mise sh
+
+WORKDIR /app/
+COPY package.json yarn.lock gdal_install.sh mise.toml ./
+RUN mise trust mise.toml
+RUN mise install
+RUN mise x -- node --version
+RUN mise x -- yarn -v
+RUN mise x -- yarn
+
+COPY testgdal.cjs ./
+RUN mise x -- node testgdal.cjs
