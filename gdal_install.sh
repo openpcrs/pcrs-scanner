@@ -6,6 +6,8 @@ INSTALL_LOCKFILE="gdal_install.lock"
 
 cd "/build"
 ls -hal
+env
+find / -name yarn.lock
 gdal-config --version
 # check a file to not run into a recursion
 if [[ ! -e "$INSTALL_LOCKFILE" ]]; then
