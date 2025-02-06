@@ -4,7 +4,7 @@ set -Eeuox pipefail
 
 INSTALL_LOCKFILE="gdal_install.lock"
 
-cd "$BUILD_DIR"
+cd "/build"
 gdal-config --version
 # check a file to not run into a recursion
 if [[ ! -e "$INSTALL_LOCKFILE" ]]; then
