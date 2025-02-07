@@ -14,6 +14,6 @@ if [[ ! -e "$INSTALL_LOCKFILE" ]]; then
   export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}/app/.apt/usr/lib/x86_64-linux-gnu/blas/:/app/.apt/usr/lib/x86_64-linux-gnu/lapack/"
   # install gdal-async with special flags
   CXXFLAGS="-I$HOME/.apt/usr/include/gdal" npm_config_build_from_source=true npm_config_shared_gdal=true yarn add gdal-async
-  CXXFLAGS="-I$HOME/.apt/usr/include/gdal" npm install gdal-async --build-from-source --shared_gdal""
+  # CXXFLAGS="-I$HOME/.apt/usr/include/gdal" npm install gdal-async --build-from-source --shared_gdal""
   rm "$INSTALL_LOCKFILE"
 fi
