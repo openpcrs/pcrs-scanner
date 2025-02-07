@@ -4,6 +4,7 @@ const gdal = require('gdal-async')
 const hostname = '0.0.0.0';
 const port = process.env.PORT;
 
+console.log(process.env.LD_LIBRARY_PATH);
 const server = createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
